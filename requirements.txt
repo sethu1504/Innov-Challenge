@@ -1,0 +1,6 @@
+Flask==0.12
+Flask-Bootstrap==3.3.7.1
+Flask-Mail==0.9.0
+Flask-ReCaptcha==0.4.2
+Flask-WTF==0.14.2
+gunicorn==19.7.1
