@@ -1,25 +1,46 @@
 import pandas as pd
 import os
 import json
+from sklearn.cluster import KMeans
 
 DATA_FOLDER = os.path.realpath(os.path.dirname('data/'))
 
 
 def read_dataset(data_id):
-    dataset = dict()
     file_url = ''
-    metadata_url = ''
     if data_id == 1:
         file_url = os.path.join(DATA_FOLDER, 'credit.csv')
-        metadata_url = os.path.join(DATA_FOLDER, 'credit.json')
     elif data_id == 2:
         file_url = os.path.join(DATA_FOLDER, 'sports.csv')
-        metadata_url = os.path.join(DATA_FOLDER, 'sports.json')
 
-    data = pd.read_csv(file_url)
+    return pd.read_csv(file_url)
+
+
+def read_metadata(data_id):
+    metadata_url = ''
+    if data_id == 1:
+        metadata_url = os.path.join(DATA_FOLDER, 'credit.json')
+    elif data_id == 2:
+        metadata_url = os.path.join(DATA_FOLDER, 'sports.json')
     with open(metadata_url) as json_file:
         metadata = json.loads(json_file.read())
-        dataset['metadata'] = metadata['metadata']
+        return metadata
 
-    dataset['data'] = data.to_json(orient='values')
-    return dataset
+
+def get_clusters(data_id, k, fields, target_name):
+    data = read_dataset(data_id)
+    kmeans = KMeans(n_clusters=k).fit(data[fields].values)
+    data[target_name] = kmeans.labels_
+    return data
+
+
+def get_cluster_field_metadata(field_name):
+    field_props = dict()
+    field_props['name'] = field_name
+    field_props['fullyQualifiedName'] = field_name.replace(' ', '_')
+    field_props['type'] = 'TEXT'
+    field_props['label'] = field_name
+    field_props['description'] = None
+    field_props['length'] = None
+    field_props['multiValue'] = False
+    return field_props

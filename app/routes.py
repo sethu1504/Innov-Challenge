@@ -13,5 +13,25 @@ def index():
 @app.route('/api/getData', methods=['GET'])
 def get_data():
     dataset_id = int(request.args['id'])
-    data = utils.read_dataset(dataset_id)
-    return json.dumps(data)
+
+    dataset = dict()
+    dataset['data'] = utils.read_dataset(dataset_id).to_json(orient='values')
+    dataset['metadata'] = utils.read_metadata(dataset_id)
+    return json.dumps(dataset)
+
+
+@app.route('/api/computeClusters', methods=['GET'])
+def compute_clusters():
+    k = int(request.args['clusterCount'])
+    fields = request.args['fields'].split(',')
+    dataset_id = int(request.args['id'])
+    target_name = request.args['targetName']
+
+    data = utils.get_clusters(dataset_id, k, fields, target_name)
+
+    dataset = dict()
+    dataset['data'] = data.to_json(orient='values')
+    metadata = utils.read_metadata(dataset_id)
+    metadata['metadata'].append(utils.get_cluster_field_metadata(target_name))
+    dataset['metadata'] = metadata
+    return json.dumps(dataset)
