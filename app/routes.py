@@ -1,5 +1,5 @@
 from app import app
-from flask import request
+from flask import request, jsonify
 import app.utils as utils
 import json
 
@@ -15,9 +15,10 @@ def get_data():
     dataset_id = int(request.args['id'])
 
     dataset = dict()
-    dataset['data'] = utils.read_dataset(dataset_id).to_json(orient='values')
+    dataset['data'] = utils.get_data(dataset_id)
     dataset['metadata'] = utils.read_metadata(dataset_id)
-    return json.dumps(dataset)
+    print(dataset)
+    return jsonify(dataset)
 
 
 @app.route('/api/computeClusters', methods=['GET'])
@@ -34,4 +35,4 @@ def compute_clusters():
     metadata = utils.read_metadata(dataset_id)
     metadata['metadata'].append(utils.get_cluster_field_metadata(target_name))
     dataset['metadata'] = metadata
-    return json.dumps(dataset)
+    return jsonify(dataset)

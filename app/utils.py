@@ -19,6 +19,15 @@ def read_dataset(data_id):
     return pd.read_csv(file_url)
 
 
+def get_data(data_id):
+    data = read_dataset(data_id)
+    data_dict_rows = data.to_dict(orient='records')
+    data_list = []
+    for row in data_dict_rows:
+        data_list.append(list(row.values()))
+    return data_list
+
+
 def read_metadata(data_id):
     metadata_url = ''
     if data_id == 1:
@@ -28,6 +37,9 @@ def read_metadata(data_id):
     with open(metadata_url) as json_file:
         metadata = json.loads(json_file.read())
         return metadata
+
+
+# def pre_process_data(data, fields, k):
 
 
 def get_clusters(data_id, k, fields, target_name):
@@ -61,10 +73,14 @@ def compute_cluster_stats(data, cluster_field_name, cluster_fields):
         fields = dict()
         for field in cluster_fields:
             field_stats = dict()
-            print(cluster_data[field].dtype)
-            field_stats['mean'] = cluster_data_stats[field]['mean']
-            field_stats['min'] = cluster_data_stats[field]['min']
-            field_stats['max'] = cluster_data_stats[field]['max']
+            if cluster_data[field].dtype == float:
+                field_stats['mean'] = cluster_data_stats[field]['mean']
+                field_stats['min'] = cluster_data_stats[field]['min']
+                field_stats['max'] = cluster_data_stats[field]['max']
+            else:
+                unique_dimensions = cluster_data[field].unique()
+                for dimension in unique_dimensions:
+                    field_stats[dimension] = cluster_data[cluster_data[field] == dimension].shape[0]
             fields[field] = field_stats
 
         cluster_stat['fields'] = fields

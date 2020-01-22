@@ -1,251 +1,249 @@
-{
-  "metadata": [
-    {
-      "name": "CUST_ID",
-      "fullyQualifiedName": "CUST_ID",
-      "type": "TEXT",
-      "label": "CUST_ID",
-      "description": null,
-      "length": null,
-      "multiValue": false
+[
+  {
+    "name": "CUST_ID",
+    "fullyQualifiedName": "CUST_ID",
+    "type": "TEXT",
+    "label": "CUST_ID",
+    "description": null,
+    "length": null,
+    "multiValue": false
+  },
+  {
+    "name": "BALANCE",
+    "fullyQualifiedName": "BALANCE",
+    "type": "NUMBER",
+    "label": "BALANCE",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "BALANCE",
-      "fullyQualifiedName": "BALANCE",
-      "type": "NUMBER",
-      "label": "BALANCE",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "BALANCE_FREQUENCY",
+    "fullyQualifiedName": "BALANCE_FREQUENCY",
+    "type": "NUMBER",
+    "label": "BALANCE_FREQUENCY",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "BALANCE_FREQUENCY",
-      "fullyQualifiedName": "BALANCE_FREQUENCY",
-      "type": "NUMBER",
-      "label": "BALANCE_FREQUENCY",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "PURCHASES",
+    "fullyQualifiedName": "PURCHASES",
+    "type": "NUMBER",
+    "label": "PURCHASES",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "PURCHASES",
-      "fullyQualifiedName": "PURCHASES",
-      "type": "NUMBER",
-      "label": "PURCHASES",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "ONEOFF_PURCHASES",
+    "fullyQualifiedName": "ONEOFF_PURCHASES",
+    "type": "NUMBER",
+    "label": "ONEOFF_PURCHASES",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "ONEOFF_PURCHASES",
-      "fullyQualifiedName": "ONEOFF_PURCHASES",
-      "type": "NUMBER",
-      "label": "ONEOFF_PURCHASES",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "INSTALLMENTS_PURCHASES",
+    "fullyQualifiedName": "INSTALLMENTS_PURCHASES",
+    "type": "NUMBER",
+    "label": "INSTALLMENTS_PURCHASES",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "INSTALLMENTS_PURCHASES",
-      "fullyQualifiedName": "INSTALLMENTS_PURCHASES",
-      "type": "NUMBER",
-      "label": "INSTALLMENTS_PURCHASES",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "CASH_ADVANCE",
+    "fullyQualifiedName": "CASH_ADVANCE",
+    "type": "NUMBER",
+    "label": "CASH_ADVANCE",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "CASH_ADVANCE",
-      "fullyQualifiedName": "CASH_ADVANCE",
-      "type": "NUMBER",
-      "label": "CASH_ADVANCE",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "PURCHASES_FREQUENCY",
+    "fullyQualifiedName": "PURCHASES_FREQUENCY",
+    "type": "NUMBER",
+    "label": "PURCHASES_FREQUENCY",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "PURCHASES_FREQUENCY",
-      "fullyQualifiedName": "PURCHASES_FREQUENCY",
-      "type": "NUMBER",
-      "label": "PURCHASES_FREQUENCY",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "ONEOFF_PURCHASES_FREQUENCY",
+    "fullyQualifiedName": "ONEOFF_PURCHASES_FREQUENCY",
+    "type": "NUMBER",
+    "label": "ONEOFF_PURCHASES_FREQUENCY",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "ONEOFF_PURCHASES_FREQUENCY",
-      "fullyQualifiedName": "ONEOFF_PURCHASES_FREQUENCY",
-      "type": "NUMBER",
-      "label": "ONEOFF_PURCHASES_FREQUENCY",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "PURCHASES_INSTALLMENTS_FREQUENCY",
+    "fullyQualifiedName": "PURCHASES_INSTALLMENTS_FREQUENCY",
+    "type": "NUMBER",
+    "label": "PURCHASES_INSTALLMENTS_FREQUENCY",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "PURCHASES_INSTALLMENTS_FREQUENCY",
-      "fullyQualifiedName": "PURCHASES_INSTALLMENTS_FREQUENCY",
-      "type": "NUMBER",
-      "label": "PURCHASES_INSTALLMENTS_FREQUENCY",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "CASH_ADVANCE_FREQUENCY",
+    "fullyQualifiedName": "CASH_ADVANCE_FREQUENCY",
+    "type": "NUMBER",
+    "label": "CASH_ADVANCE_FREQUENCY",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "CASH_ADVANCE_FREQUENCY",
-      "fullyQualifiedName": "CASH_ADVANCE_FREQUENCY",
-      "type": "NUMBER",
-      "label": "CASH_ADVANCE_FREQUENCY",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "CASH_ADVANCE_TRX",
+    "fullyQualifiedName": "CASH_ADVANCE_TRX",
+    "type": "NUMBER",
+    "label": "CASH_ADVANCE_TRX",
+    "description": null,
+    "format": "#################0",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "CASH_ADVANCE_TRX",
-      "fullyQualifiedName": "CASH_ADVANCE_TRX",
-      "type": "NUMBER",
-      "label": "CASH_ADVANCE_TRX",
-      "description": null,
-      "format": "#################0",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 0,
-      "precision": 18,
-      "multiValue": false
+    "scale": 0,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "PURCHASES_TRX",
+    "fullyQualifiedName": "PURCHASES_TRX",
+    "type": "NUMBER",
+    "label": "PURCHASES_TRX",
+    "description": null,
+    "format": "#################0",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "PURCHASES_TRX",
-      "fullyQualifiedName": "PURCHASES_TRX",
-      "type": "NUMBER",
-      "label": "PURCHASES_TRX",
-      "description": null,
-      "format": "#################0",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 0,
-      "precision": 18,
-      "multiValue": false
+    "scale": 0,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "CREDIT_LIMIT",
+    "fullyQualifiedName": "CREDIT_LIMIT",
+    "type": "NUMBER",
+    "label": "CREDIT_LIMIT",
+    "description": null,
+    "format": "#################0",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "CREDIT_LIMIT",
-      "fullyQualifiedName": "CREDIT_LIMIT",
-      "type": "NUMBER",
-      "label": "CREDIT_LIMIT",
-      "description": null,
-      "format": "#################0",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 0,
-      "precision": 18,
-      "multiValue": false
+    "scale": 0,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "PAYMENTS",
+    "fullyQualifiedName": "PAYMENTS",
+    "type": "NUMBER",
+    "label": "PAYMENTS",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "PAYMENTS",
-      "fullyQualifiedName": "PAYMENTS",
-      "type": "NUMBER",
-      "label": "PAYMENTS",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "MINIMUM_PAYMENTS",
+    "fullyQualifiedName": "MINIMUM_PAYMENTS",
+    "type": "NUMBER",
+    "label": "MINIMUM_PAYMENTS",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "MINIMUM_PAYMENTS",
-      "fullyQualifiedName": "MINIMUM_PAYMENTS",
-      "type": "NUMBER",
-      "label": "MINIMUM_PAYMENTS",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "PRC_FULL_PAYMENT",
+    "fullyQualifiedName": "PRC_FULL_PAYMENT",
+    "type": "NUMBER",
+    "label": "PRC_FULL_PAYMENT",
+    "description": null,
+    "format": "#,##0.00",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "PRC_FULL_PAYMENT",
-      "fullyQualifiedName": "PRC_FULL_PAYMENT",
-      "type": "NUMBER",
-      "label": "PRC_FULL_PAYMENT",
-      "description": null,
-      "format": "#,##0.00",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 2,
-      "precision": 18,
-      "multiValue": false
+    "scale": 2,
+    "precision": 18,
+    "multiValue": false
+  },
+  {
+    "name": "TENURE",
+    "fullyQualifiedName": "TENURE",
+    "type": "NUMBER",
+    "label": "TENURE",
+    "description": null,
+    "format": "#################0",
+    "formatSymbols": {
+      "decimalSymbol": "."
     },
-    {
-      "name": "TENURE",
-      "fullyQualifiedName": "TENURE",
-      "type": "NUMBER",
-      "label": "TENURE",
-      "description": null,
-      "format": "#################0",
-      "formatSymbols": {
-        "decimalSymbol": "."
-      },
-      "scale": 0,
-      "precision": 18,
-      "multiValue": false
-    }
-  ]
-}
+    "scale": 0,
+    "precision": 18,
+    "multiValue": false
+  }
+]
