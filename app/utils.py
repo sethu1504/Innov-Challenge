@@ -20,6 +20,7 @@ def read_dataset(data_id):
 
 
 def convert_data_to_list(data):
+    data = data.replace({pd.np.nan: None})
     data_dict_rows = data.to_dict(orient='records')
     data_list = []
     for row in data_dict_rows:
