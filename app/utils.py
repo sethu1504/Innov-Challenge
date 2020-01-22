@@ -19,13 +19,17 @@ def read_dataset(data_id):
     return pd.read_csv(file_url)
 
 
-def get_data(data_id):
-    data = read_dataset(data_id)
+def convert_data_to_list(data):
     data_dict_rows = data.to_dict(orient='records')
     data_list = []
     for row in data_dict_rows:
         data_list.append(list(row.values()))
     return data_list
+
+
+def get_data(data_id):
+    data = read_dataset(data_id)
+    return convert_data_to_list(data)
 
 
 def read_metadata(data_id):

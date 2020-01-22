@@ -1,7 +1,6 @@
 from app import app
 from flask import request, jsonify
 import app.utils as utils
-import json
 
 
 @app.route('/')
@@ -17,7 +16,6 @@ def get_data():
     dataset = dict()
     dataset['data'] = utils.get_data(dataset_id)
     dataset['metadata'] = utils.read_metadata(dataset_id)
-    print(dataset)
     return jsonify(dataset)
 
 
@@ -31,8 +29,8 @@ def compute_clusters():
     data = utils.get_clusters(dataset_id, k, fields, target_name)
 
     dataset = dict()
-    dataset['data'] = data.to_json(orient='values')
+    dataset['data'] = utils.convert_data_to_list(data)
     metadata = utils.read_metadata(dataset_id)
-    metadata['metadata'].append(utils.get_cluster_field_metadata(target_name))
+    metadata.append(utils.get_cluster_field_metadata(target_name))
     dataset['metadata'] = metadata
     return jsonify(dataset)
