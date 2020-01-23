@@ -56,7 +56,6 @@ def pre_process_data(data, fields):
     pre_processed_data = data[fields].copy()
 
     for field in fields:
-        col_name = field + '_Range'
         pre_processed_data.loc[(data[field].isnull() == True), field] = data[field].mean()
 
     #     if field in columns_1:
@@ -94,14 +93,37 @@ def pre_process_data(data, fields):
     #
     # pre_processed_data = pre_processed_data.drop(fields, axis=1)
     scale = StandardScaler()
-    return scale.fit_transform(np.asarray(pre_processed_data))
+    pre_processed_data[fields] = scale.fit_transform(pre_processed_data[fields])
+    return pre_processed_data
 
 
-def get_clusters(data_id, k, fields, target_name):
+def get_clusters(data_id, k, cluster_fields, target_name, detect_anomaly):
     data = read_dataset(data_id)
-    kmeans = KMeans(n_clusters=k, random_state=0).fit(pre_process_data(data, fields))
-    data[target_name] = kmeans.labels_
-    return data
+    processed_data = pre_process_data(data, cluster_fields)
+    kmeans = KMeans(n_clusters=k, random_state=0).fit(np.asarray(processed_data))
+
+    if detect_anomaly:
+        processed_data['intermediate_cluster'] = kmeans.labels_
+        processed_data['dist'] = 0
+
+        for i in range(0, k):
+            processed_data.loc[(processed_data['intermediate_cluster'] == i), 'dist'] = \
+                processed_data[cluster_fields].sub(np.array(kmeans.cluster_centers_[i])).pow(2).sum(1).pow(0.5)
+
+        processed_data[target_name] = processed_data['intermediate_cluster']
+        for i in range(0, k):
+            cluster_mean = processed_data[processed_data['intermediate_cluster'] == i]['dist'].mean()
+            cluster_std = processed_data[processed_data['intermediate_cluster'] == i]['dist'].std()
+
+            limit = cluster_mean + (3 * cluster_std)
+
+            processed_data.loc[(processed_data['intermediate_cluster'] == i) & (processed_data['dist'] > limit), target_name] = -1
+
+        data[target_name] = processed_data[target_name]
+        return data
+    else:
+        data[target_name] = kmeans.labels_
+        return data
 
 
 def get_cluster_field_metadata(field_name):
@@ -176,6 +198,7 @@ def _get_prefix(overall_max, overall_min, current_max, current_min):
     else:
         return 'Average'
 
+
 def _get_field_bins(field, field_data):
     bins = dict()
     bin_count = _get_bin_count(field)
@@ -186,6 +209,7 @@ def _get_field_bins(field, field_data):
         key = int(data % bin_count) + 1
         bins[key] += 1
     return bins
+
 
 def _get_bin_count(field):
     if field in ['BALANCE', 'PURCHASES', 'ONE_OFF_PURCHASES', 'INSTALLMENTS_PURCHASES', 'CASH_ADVANCE', 'CREDIT_LIMIT', 'PAYMENTS', 'MINIMUM_PAYMENTS']:

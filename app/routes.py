@@ -25,8 +25,9 @@ def compute_clusters():
     fields = request.args['fields'].split(',')
     dataset_id = int(request.args['id'])
     target_name = request.args['targetName']
+    detect_anomaly = bool(request.args['detectAnomaly'])
 
-    data = utils.get_clusters(dataset_id, k, fields, target_name)
+    data = utils.get_clusters(dataset_id, k, fields, target_name, detect_anomaly)
 
     dataset = dict()
     dataset['data'] = utils.convert_data_to_list(data)
