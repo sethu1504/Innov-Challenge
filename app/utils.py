@@ -94,11 +94,18 @@ def compute_cluster_stats(data, cluster_field_name, cluster_fields):
     return stats
 
 
-def get_mapping_points(data, cluster_fields):
+def get_mapping_points(data, cluster_fields, target_name):
     cluster_data = data[cluster_fields]
     distance = 1 - cosine_similarity(np.asarray(cluster_data))
 
     pca = PCA(2)
     pca.fit(distance)
     pca_data = pca.transform(distance)
-    return pca_data
+
+    mapping_points = []
+    for i in range(0, pca_data.shape[0]):
+        record = list(pca_data[i])
+        record.append(str(data.iloc[i][target_name]))
+        mapping_points.append(record)
+    return mapping_points
+
