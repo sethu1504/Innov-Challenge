@@ -102,7 +102,7 @@ def get_clusters(data_id, k, cluster_fields, target_name, detect_anomaly):
     processed_data = pre_process_data(data, cluster_fields)
     kmeans = KMeans(n_clusters=k, random_state=0).fit(np.asarray(processed_data))
 
-    if detect_anomaly:
+    if detect_anomaly == 1:
         processed_data['intermediate_cluster'] = kmeans.labels_
         processed_data['dist'] = 0
 
