@@ -59,40 +59,40 @@ def pre_process_data(data, fields):
         col_name = field + '_Range'
         pre_processed_data.loc[(data[field].isnull() == True), field] = data[field].mean()
 
-        if field in columns_1:
-            pre_processed_data[col_name] = 0
-            pre_processed_data.loc[((pre_processed_data[field] > 0) & (pre_processed_data[field] <= 500)), col_name] = 1
-            pre_processed_data.loc[((pre_processed_data[field] > 500) & (pre_processed_data[field] <= 1000)), col_name] = 2
-            pre_processed_data.loc[((pre_processed_data[field] > 1000) & (pre_processed_data[field] <= 3000)), col_name] = 3
-            pre_processed_data.loc[((pre_processed_data[field] > 3000) & (pre_processed_data[field] <= 5000)), col_name] = 4
-            pre_processed_data.loc[((pre_processed_data[field] > 5000) & (pre_processed_data[field] <= 10000)), col_name] = 5
-            pre_processed_data.loc[(pre_processed_data[field] > 10000), col_name] = 6
-
-        elif field in columns_2:
-            pre_processed_data[col_name] = 0
-            pre_processed_data.loc[((pre_processed_data[field] > 0) & (pre_processed_data[field] <= 0.1)), col_name] = 1
-            pre_processed_data.loc[((pre_processed_data[field] > 0.1) & (pre_processed_data[field] <= 0.2)), col_name] = 2
-            pre_processed_data.loc[((pre_processed_data[field] > 0.2) & (pre_processed_data[field] <= 0.3)), col_name] = 3
-            pre_processed_data.loc[((pre_processed_data[field] > 0.3) & (pre_processed_data[field] <= 0.4)), col_name] = 4
-            pre_processed_data.loc[((pre_processed_data[field] > 0.4) & (pre_processed_data[field] <= 0.5)), col_name] = 5
-            pre_processed_data.loc[((pre_processed_data[field] > 0.5) & (pre_processed_data[field] <= 0.6)), col_name] = 6
-            pre_processed_data.loc[((pre_processed_data[field] > 0.6) & (pre_processed_data[field] <= 0.7)), col_name] = 7
-            pre_processed_data.loc[((pre_processed_data[field] > 0.7) & (pre_processed_data[field] <= 0.8)), col_name] = 8
-            pre_processed_data.loc[((pre_processed_data[field] > 0.8) & (pre_processed_data[field] <= 0.9)), col_name] = 9
-            pre_processed_data.loc[((pre_processed_data[field] > 0.9) & (pre_processed_data[field] <= 1.0)), col_name] = 10
-
-        else:
-            pre_processed_data[col_name] = 0
-            pre_processed_data.loc[((pre_processed_data[field] > 0) & (pre_processed_data[field] <= 5)), col_name] = 1
-            pre_processed_data.loc[((pre_processed_data[field] > 5) & (pre_processed_data[field] <= 10)), col_name] = 2
-            pre_processed_data.loc[((pre_processed_data[field] > 10) & (pre_processed_data[field] <= 15)), col_name] = 3
-            pre_processed_data.loc[((pre_processed_data[field] > 15) & (pre_processed_data[field] <= 20)), col_name] = 4
-            pre_processed_data.loc[((pre_processed_data[field] > 20) & (pre_processed_data[field] <= 30)), col_name] = 5
-            pre_processed_data.loc[((pre_processed_data[field] > 30) & (pre_processed_data[field] <= 50)), col_name] = 6
-            pre_processed_data.loc[((pre_processed_data[field] > 50) & (pre_processed_data[field] <= 100)), col_name] = 7
-            pre_processed_data.loc[(pre_processed_data[field] > 100), col_name] = 8
-
-    pre_processed_data = pre_processed_data.drop(fields, axis=1)
+    #     if field in columns_1:
+    #         pre_processed_data[col_name] = 0
+    #         pre_processed_data.loc[((pre_processed_data[field] > 0) & (pre_processed_data[field] <= 500)), col_name] = 1
+    #         pre_processed_data.loc[((pre_processed_data[field] > 500) & (pre_processed_data[field] <= 1000)), col_name] = 2
+    #         pre_processed_data.loc[((pre_processed_data[field] > 1000) & (pre_processed_data[field] <= 3000)), col_name] = 3
+    #         pre_processed_data.loc[((pre_processed_data[field] > 3000) & (pre_processed_data[field] <= 5000)), col_name] = 4
+    #         pre_processed_data.loc[((pre_processed_data[field] > 5000) & (pre_processed_data[field] <= 10000)), col_name] = 5
+    #         pre_processed_data.loc[(pre_processed_data[field] > 10000), col_name] = 6
+    #
+    #     elif field in columns_2:
+    #         pre_processed_data[col_name] = 0
+    #         pre_processed_data.loc[((pre_processed_data[field] > 0) & (pre_processed_data[field] <= 0.1)), col_name] = 1
+    #         pre_processed_data.loc[((pre_processed_data[field] > 0.1) & (pre_processed_data[field] <= 0.2)), col_name] = 2
+    #         pre_processed_data.loc[((pre_processed_data[field] > 0.2) & (pre_processed_data[field] <= 0.3)), col_name] = 3
+    #         pre_processed_data.loc[((pre_processed_data[field] > 0.3) & (pre_processed_data[field] <= 0.4)), col_name] = 4
+    #         pre_processed_data.loc[((pre_processed_data[field] > 0.4) & (pre_processed_data[field] <= 0.5)), col_name] = 5
+    #         pre_processed_data.loc[((pre_processed_data[field] > 0.5) & (pre_processed_data[field] <= 0.6)), col_name] = 6
+    #         pre_processed_data.loc[((pre_processed_data[field] > 0.6) & (pre_processed_data[field] <= 0.7)), col_name] = 7
+    #         pre_processed_data.loc[((pre_processed_data[field] > 0.7) & (pre_processed_data[field] <= 0.8)), col_name] = 8
+    #         pre_processed_data.loc[((pre_processed_data[field] > 0.8) & (pre_processed_data[field] <= 0.9)), col_name] = 9
+    #         pre_processed_data.loc[((pre_processed_data[field] > 0.9) & (pre_processed_data[field] <= 1.0)), col_name] = 10
+    #
+    #     else:
+    #         pre_processed_data[col_name] = 0
+    #         pre_processed_data.loc[((pre_processed_data[field] > 0) & (pre_processed_data[field] <= 5)), col_name] = 1
+    #         pre_processed_data.loc[((pre_processed_data[field] > 5) & (pre_processed_data[field] <= 10)), col_name] = 2
+    #         pre_processed_data.loc[((pre_processed_data[field] > 10) & (pre_processed_data[field] <= 15)), col_name] = 3
+    #         pre_processed_data.loc[((pre_processed_data[field] > 15) & (pre_processed_data[field] <= 20)), col_name] = 4
+    #         pre_processed_data.loc[((pre_processed_data[field] > 20) & (pre_processed_data[field] <= 30)), col_name] = 5
+    #         pre_processed_data.loc[((pre_processed_data[field] > 30) & (pre_processed_data[field] <= 50)), col_name] = 6
+    #         pre_processed_data.loc[((pre_processed_data[field] > 50) & (pre_processed_data[field] <= 100)), col_name] = 7
+    #         pre_processed_data.loc[(pre_processed_data[field] > 100), col_name] = 8
+    #
+    # pre_processed_data = pre_processed_data.drop(fields, axis=1)
     scale = StandardScaler()
     return scale.fit_transform(np.asarray(pre_processed_data))
 
@@ -152,8 +152,8 @@ def compute_cluster_stats(data, cluster_field_name, cluster_fields):
 
 
 def get_mapping_points(data, cluster_fields, target_name):
-    cluster_data = data[cluster_fields]
-    distance = 1 - cosine_similarity(np.asarray(cluster_data))
+    processed_data = pre_process_data(data, cluster_fields)
+    distance = 1 - cosine_similarity(np.asarray(processed_data))
 
     pca = PCA(2)
     pca.fit(distance)
