@@ -89,7 +89,7 @@ def compute_cluster_stats(data, cluster_field_name, cluster_fields):
             fields[field] = field_stats
 
         cluster_stat['fields'] = fields
-        stats[cluster] = cluster_stat
+        stats[str(cluster)] = cluster_stat
 
     return stats
 

@@ -33,4 +33,6 @@ def compute_clusters():
     metadata = utils.read_metadata(dataset_id)
     metadata.append(utils.get_cluster_field_metadata(target_name))
     dataset['metadata'] = metadata
+    dataset['mappingPoints'] = utils.get_mapping_points(data, fields).tolist()
+    dataset['stats'] = utils.compute_cluster_stats(data, target_name, fields)
     return jsonify(dataset)
