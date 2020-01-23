@@ -121,7 +121,7 @@ def compute_cluster_stats(data, cluster_field_name, cluster_fields):
     clusters = data[cluster_field_name].unique()
 
     for cluster in clusters:
-        cluster_name = ''
+        description = ''
         cluster_data = data[data[cluster_field_name] == cluster]
         cluster_data_stats = cluster_data.describe()
         cluster_stat = dict()
@@ -135,18 +135,18 @@ def compute_cluster_stats(data, cluster_field_name, cluster_fields):
                 field_stats['mean'] = cluster_data_stats[field]['mean']
                 field_stats['min'] = cluster_data_stats[field]['min']
                 field_stats['max'] = cluster_data_stats[field]['max']
-                cluster_name += _get_prefix(max_field_value, min_field_value, field_stats['max'], field_stats['min'])
+                description += _get_prefix(max_field_value, min_field_value, field_stats['max'], field_stats['min'])
             else:
                 unique_dimensions = cluster_data[field].unique()
                 for dimension in unique_dimensions:
                     field_stats[dimension] = cluster_data[cluster_data[field] == dimension].shape[0]
-                cluster_name += 'Unique'
+                description += 'Unique'
             fields[field] = field_stats
-            cluster_name += field + '_'
+            description += ' ' + field + ', '
 
         cluster_stat['fields'] = fields
-        cluster_name = cluster_name[:-1]
-        stats[cluster_name] = cluster_stat
+        cluster_stat['description'] = description[:-2]
+        stats['Cluster' + str(cluster)] = cluster_stat
 
     return stats
 
