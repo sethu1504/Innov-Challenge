@@ -71,25 +71,32 @@ def compute_cluster_stats(data, cluster_field_name, cluster_fields):
     clusters = data[cluster_field_name].unique()
 
     for cluster in clusters:
+        cluster_name = ''
         cluster_data = data[data[cluster_field_name] == cluster]
         cluster_data_stats = cluster_data.describe()
         cluster_stat = dict()
         cluster_stat['count'] = cluster_data.shape[0]
         fields = dict()
         for field in cluster_fields:
+            max_field_value = max(data[field])
+            min_field_value = min(data[field])
             field_stats = dict()
             if cluster_data[field].dtype == float:
                 field_stats['mean'] = cluster_data_stats[field]['mean']
                 field_stats['min'] = cluster_data_stats[field]['min']
                 field_stats['max'] = cluster_data_stats[field]['max']
+                cluster_name += _get_prefix(max_field_value, min_field_value, field_stats['max'], field_stats['min'])
             else:
                 unique_dimensions = cluster_data[field].unique()
                 for dimension in unique_dimensions:
                     field_stats[dimension] = cluster_data[cluster_data[field] == dimension].shape[0]
+                cluster_name += 'Unique'
             fields[field] = field_stats
+            cluster_name += field + '_'
 
         cluster_stat['fields'] = fields
-        stats[str(cluster)] = cluster_stat
+        cluster_name = cluster_name[:-1]
+        stats[cluster_name] = cluster_stat
 
     return stats
 
@@ -109,3 +116,10 @@ def get_mapping_points(data, cluster_fields, target_name):
         mapping_points.append(record)
     return mapping_points
 
+def _get_prefix(overall_max, overall_min, current_max, current_min):
+    if current_max == overall_max:
+        return 'High'
+    elif current_min == overall_min:
+        return 'Low'
+    else:
+        return 'Average'
