@@ -158,12 +158,13 @@ def compute_cluster_stats(data, cluster_field_name, cluster_fields):
                 field_stats['min'] = cluster_data_stats[field]['min']
                 field_stats['max'] = cluster_data_stats[field]['max']
                 description += _get_prefix(max_field_value, min_field_value, field_stats['max'], field_stats['min'])
+                field_stats['bins'] = _get_field_bins(field, cluster_data[field], field_stats['min'], field_stats['max'])
             else:
                 unique_dimensions = cluster_data[field].unique()
                 for dimension in unique_dimensions:
                     field_stats[dimension] = cluster_data[cluster_data[field] == dimension].shape[0]
                 description += 'Unique'
-            field_stats['bins'] = _get_field_bins(field, cluster_data[field])
+                field_stats['bins'] = _get_field_bins(field, cluster_data[field], field_stats[dimension], field_stats[dimension]) 
             fields[field] = field_stats
             description += ' ' + field + ', '
 
@@ -198,18 +199,24 @@ def _get_prefix(overall_max, overall_min, current_max, current_min):
     else:
         return 'Average'
 
-
-def _get_field_bins(field, field_data):
+def _get_field_bins(field, field_data, min_in_cluster, max_in_cluster):
     bins = dict()
-    bin_count = _get_bin_count(field)
-    for count in range(bin_count):
-        # initialize each bin to count 0
-        bins[count + 1] = 0
-    for data in field_data:
-        key = int(data % bin_count) + 1
-        bins[key] += 1
+    if min_in_cluster != max_in_cluster:
+        bin_count = _get_bin_count(field)
+        bucket_size = (max_in_cluster - min_in_cluster) / bin_count
+        start_range = min_in_cluster
+        for count in range(bin_count):
+            key = count + 1
+            bins[key] = dict()
+            # initialize each bin to count 0
+            bins[key]['count'] = 0
+            end_range = start_range + bucket_size
+            bins[key]['range'] = str(round(start_range, 2)) + ',' + str(round(end_range, 2))
+            start_range = end_range
+        for data in field_data:
+            key = int(data % bin_count) + 1
+            bins[key]['count'] += 1
     return bins
-
 
 def _get_bin_count(field):
     if field in ['BALANCE', 'PURCHASES', 'ONE_OFF_PURCHASES', 'INSTALLMENTS_PURCHASES', 'CASH_ADVANCE', 'CREDIT_LIMIT', 'PAYMENTS', 'MINIMUM_PAYMENTS']:
