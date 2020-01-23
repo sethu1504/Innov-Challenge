@@ -141,6 +141,7 @@ def compute_cluster_stats(data, cluster_field_name, cluster_fields):
                 for dimension in unique_dimensions:
                     field_stats[dimension] = cluster_data[cluster_data[field] == dimension].shape[0]
                 description += 'Unique'
+            field_stats['bins'] = _get_field_bins(field, cluster_data[field])
             fields[field] = field_stats
             description += ' ' + field + ', '
 
@@ -174,3 +175,26 @@ def _get_prefix(overall_max, overall_min, current_max, current_min):
         return 'Low'
     else:
         return 'Average'
+
+def _get_field_bins(field, field_data):
+    bins = dict()
+    bin_count = _get_bin_count(field)
+    for count in range(bin_count):
+        # initialize each bin to count 0
+        bins[count + 1] = 0
+    for data in field_data:
+        key = int(data % bin_count) + 1
+        bins[key] += 1
+    return bins
+
+def _get_bin_count(field):
+    if field in ['BALANCE', 'PURCHASES', 'ONE_OFF_PURCHASES', 'INSTALLMENTS_PURCHASES', 'CASH_ADVANCE', 'CREDIT_LIMIT', 'PAYMENTS', 'MINIMUM_PAYMENTS']:
+        return 6
+    elif field in ['PURCHASES_TAX', 'CASH_ADVANCE_TAX']:
+        return 8
+    elif field in ['TENURE']:
+        return 12
+    elif field in ['ONE_OFF_PURCHASES_FREQUENCY']:
+        return 20
+    else:
+        return 10
