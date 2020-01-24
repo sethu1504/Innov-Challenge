@@ -149,14 +149,17 @@ def get_cluster_field_metadata(field_name):
 def compute_cluster_stats(data, cluster_field_name, cluster_fields):
     stats = dict()
     clusters = data[cluster_field_name].unique()
+    used_high_fields_in_description = []
+    used_low_fields_in_description = []        
 
     for cluster in clusters:
-        description = ''
         cluster_data = data[data[cluster_field_name] == cluster]
         cluster_data_stats = cluster_data.describe()
         cluster_stat = dict()
         cluster_stat['count'] = cluster_data.shape[0]
         fields = dict()
+        high_fields_in_cluster = []
+        low_fields_in_cluster = []        
         for field in cluster_fields:
             max_field_value = max(data[field])
             min_field_value = min(data[field])
@@ -165,19 +168,34 @@ def compute_cluster_stats(data, cluster_field_name, cluster_fields):
                 field_stats['mean'] = cluster_data_stats[field]['mean']
                 field_stats['min'] = cluster_data_stats[field]['min']
                 field_stats['max'] = cluster_data_stats[field]['max']
-                description += _get_prefix(max_field_value, min_field_value, field_stats['max'], field_stats['min'])
+                prefix = _get_prefix(max_field_value, min_field_value, field_stats['max'], field_stats['min'])
+                if prefix == 'High':
+                    high_fields_in_cluster.append(field)
+                elif prefix == 'Low':
+                    low_fields_in_cluster.append(field)                
                 field_stats['bins'] = _get_field_bins(field, cluster_data[field], field_stats['min'], field_stats['max'])
             else:
                 unique_dimensions = cluster_data[field].unique()
                 for dimension in unique_dimensions:
                     field_stats[dimension] = cluster_data[cluster_data[field] == dimension].shape[0]
-                description += 'Unique'
                 field_stats['bins'] = _get_field_bins(field, cluster_data[field], field_stats[dimension], field_stats[dimension]) 
             fields[field] = field_stats
-            description += ' ' + field + ', '
 
+        #pick a description for the cluster
+        description = ''
+        for high_field in high_fields_in_cluster:
+            if high_field not in used_high_fields_in_description:
+                description += 'High ' + high_field + ' '
+                used_high_fields_in_description.append(high_field)
+                break
+        for low_field in low_fields_in_cluster:
+            if low_field not in used_low_fields_in_description:
+                description += 'Low ' + low_field + ' '
+                used_low_fields_in_description.append(low_field)
+                break        
+        
         cluster_stat['fields'] = fields
-        cluster_stat['description'] = description[:-2]
+        cluster_stat['description'] = description.strip() + ' ..'
         stats[str(cluster)] = cluster_stat
 
     return stats
