@@ -97,7 +97,7 @@ def pre_process_data(data, fields):
     return pre_processed_data
 
 
-def get_clusters(data_id, k, cluster_fields, target_name, detect_anomaly):
+def get_clusters(data_id, k, cluster_fields, target_name, detect_anomaly, cluster_names):
     data = read_dataset(data_id)
     processed_data = pre_process_data(data, cluster_fields)
     kmeans = KMeans(n_clusters=k, random_state=0).fit(np.asarray(processed_data))
@@ -119,11 +119,19 @@ def get_clusters(data_id, k, cluster_fields, target_name, detect_anomaly):
 
             processed_data.loc[(processed_data['intermediate_cluster'] == i) & (processed_data['dist'] > limit), target_name] = -1
 
-        data[target_name] = processed_data[target_name]
-        return data
+        data['cluster_number'] = processed_data[target_name]
     else:
-        data[target_name] = kmeans.labels_
-        return data
+        data['cluster_number'] = kmeans.labels_
+
+    cluster_names_avaialble = len(cluster_names) > 0
+    for i in range(0, k):
+        if cluster_names_avaialble:
+            data.loc[(data['cluster_number'] == i), target_name] = cluster_names[i]
+        else:
+            data.loc[(data['cluster_number'] == i), target_name] = 'Cluster ' + str(i)
+    del data['cluster_number']
+
+    return data
 
 
 def get_cluster_field_metadata(field_name):
@@ -199,6 +207,7 @@ def _get_prefix(overall_max, overall_min, current_max, current_min):
     else:
         return 'Average'
 
+
 def _get_field_bins(field, field_data, min_in_cluster, max_in_cluster):
     bins = dict()
     if min_in_cluster != max_in_cluster:
@@ -218,6 +227,7 @@ def _get_field_bins(field, field_data, min_in_cluster, max_in_cluster):
             bins[key]['count'] += 1
     return bins
 
+
 def _get_bin_count(field):
     if field in ['BALANCE', 'PURCHASES', 'ONE_OFF_PURCHASES', 'INSTALLMENTS_PURCHASES', 'CASH_ADVANCE', 'CREDIT_LIMIT', 'PAYMENTS', 'MINIMUM_PAYMENTS']:
         return 6
@@ -229,3 +239,6 @@ def _get_bin_count(field):
         return 20
     else:
         return 10
+
+
+# print(get_clusters(1, 2, ["BALANCE", "BALANCE_FREQUENCY"], "Cluster", 0, []))
