@@ -56,7 +56,7 @@ def pre_process_data(data, fields):
     pre_processed_data = data[fields].copy()
 
     for field in fields:
-        pre_processed_data.loc[(data[field].isnull() == True), field] = data[field].mean()
+        pre_processed_data[field].fillna((pre_processed_data[field].mean()), inplace=True)
 
     #     if field in columns_1:
     #         pre_processed_data[col_name] = 0
@@ -239,6 +239,3 @@ def _get_bin_count(field):
         return 20
     else:
         return 10
-
-
-# print(get_clusters(1, 2, ["BALANCE", "BALANCE_FREQUENCY"], "Cluster", 0, []))
