@@ -166,14 +166,14 @@ def compute_cluster_stats(data, cluster_field_name, cluster_fields):
         for field in cluster_fields:
             max_field_value = max(data[field])
             min_field_value = min(data[field])
-            mean_field_value = data[field].mean()
-            std_field_value = data[field].std()
+            percentile_25 = data[field].quantile(0.25)
+            percentile_75 = data[field].quantile(0.75)
             field_stats = dict()
             if cluster_data[field].dtype == float:
                 field_stats['mean'] = cluster_data_stats[field]['mean']
                 field_stats['min'] = cluster_data_stats[field]['min']
                 field_stats['max'] = cluster_data_stats[field]['max']
-                field_stats['bins'] = get_3_bins(mean_field_value, std_field_value, cluster_data, field)
+                field_stats['bins'] = get_3_bins(percentile_25, percentile_75, cluster_data, field)
                 prefix = _get_prefix(max_field_value, min_field_value, field_stats['max'], field_stats['min'])
                 if prefix == 'High':
                     high_fields_in_cluster.append(field)
@@ -232,14 +232,12 @@ def _get_prefix(overall_max, overall_min, current_max, current_min):
         return 'Average'
 
 
-def get_3_bins(mean, std, cluster_data, field):
+def get_3_bins(percentile_25, percentile_75, cluster_data, field):
     bins = dict()
-    higher_bound = mean + (1.5 * std)
-    lower_bound = mean - std
 
-    avg_count = cluster_data[(cluster_data[field] > lower_bound) & (cluster_data[field] < higher_bound)].shape[0]
-    low_count = cluster_data[cluster_data[field] <= lower_bound].shape[0]
-    high_count = cluster_data[cluster_data[field] >= higher_bound].shape[0]
+    avg_count = cluster_data[(cluster_data[field] > percentile_25) & (cluster_data[field] < percentile_75)].shape[0]
+    low_count = cluster_data[cluster_data[field] <= percentile_25].shape[0]
+    high_count = cluster_data[cluster_data[field] >= percentile_75].shape[0]
 
     bins["Low"] = low_count
     bins["Average"] = avg_count
