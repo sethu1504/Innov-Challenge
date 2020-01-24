@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import json
 import numpy as np
+import math
 from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import StandardScaler
@@ -243,6 +244,8 @@ def _get_field_bins(field, field_data, min_in_cluster, max_in_cluster):
             bins[key]['range'] = str(round(start_range, 2)) + ',' + str(round(end_range, 2))
             start_range = end_range
         for data in field_data:
+            if (math.isnan(data)):
+                continue                
             key = int(data % bin_count) + 1
             bins[key]['count'] += 1
     return bins
