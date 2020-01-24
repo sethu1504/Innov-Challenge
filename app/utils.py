@@ -6,6 +6,7 @@ from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
+import collections
 
 DATA_FOLDER = os.path.realpath(os.path.dirname('data/'))
 
@@ -32,7 +33,8 @@ def convert_data_to_list(data):
     data_dict_rows = data.to_dict(orient='records')
     data_list = []
     for row in data_dict_rows:
-        data_list.append(list(row.values()))
+        new_dict = collections.OrderedDict(sorted(row.items(), key=lambda  x: data.columns.get_loc(x[0])))
+        data_list.append(list(new_dict.values()))
     return data_list
 
 
@@ -257,3 +259,4 @@ def _get_bin_count(field):
         return 20
     else:
         return 10
+
